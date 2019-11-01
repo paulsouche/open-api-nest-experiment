@@ -1,0 +1,25 @@
+{
+  "name": "open-api-nest-experiment",
+  "version": "1.0.0",
+  "description": "Experiment on open api",
+  "repository": "git@github.com:paulsouche/open-api-nest-experiment.git",
+  "author": "paulsouche <paul.souche@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "lerna run build --stream --parallel",
+    "lint": "lerna run lint --stream --parallel",
+    "test": "lerna run test --stream --parallel"
+  },
+  "dependencies": {
+    "tslib": "^1.10.0"
+  },
+  "devDependencies": {
+    "lerna": "^3.18.3",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.4"
+  }
+}
