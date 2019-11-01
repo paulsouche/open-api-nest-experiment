@@ -6,13 +6,17 @@
   "author": "paulsouche <paul.souche@gmail.com>",
   "license": "MIT",
   "private": true,
+  "resolutions": {
+    "rimraf": "^3.0.0"
+  },
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
     "build": "lerna run build --stream --parallel",
     "lint": "lerna run lint --stream --parallel",
-    "test": "lerna run test --stream --parallel"
+    "test": "lerna run test --stream --parallel",
+    "test:e2e": "lerna run test:e2e --stream --parallel"
   },
   "dependencies": {
     "tslib": "^1.10.0"
