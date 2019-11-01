@@ -1,20 +1,13 @@
-# Open api experiments
+# API
 
-## Description
-
-Experiment on open api
-
-## Installation
+## Running the app
 
 ```bash
-$ yarn
-```
+# development
+$ yarn start
 
-## Build
-
-```bash
-# build
-$ yarn build
+# production mode
+$ yarn start:prod
 ```
 
 ## Test
@@ -22,6 +15,9 @@ $ yarn build
 ```bash
 # unit tests
 $ yarn test
+
+# test coverage
+$ yarn test:coverage
 
 # e2e tests
 $ yarn test:e2e
