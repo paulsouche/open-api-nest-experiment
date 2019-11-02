@@ -1,34 +1,46 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiUseTags } from '@nestjs/swagger';
 import UserCreateDto from '../models/user-create-dto';
 import UserDto from '../models/user-dto';
 import UserUpdateDto from '../models/user-update-dto';
 import UsersService from '../services/users.service';
 
+@ApiUseTags('users')
 @Controller('users')
 export default class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
   @Get()
+  @ApiOkResponse({ description: 'Returns a list of users', type: [UserDto] })
   getUsers(): UserDto[] {
     return this.usersService.getUsers();
   }
 
   @Get(':id')
+  @ApiOkResponse({ description: 'Returns a user', type: UserDto })
+  @ApiNotFoundResponse({ description: 'User not found' })
   getUser(@Param('id') id: string): UserDto {
     return this.usersService.getUser(id);
   }
 
   @Post()
+  @ApiCreatedResponse({ description: 'Creates a user', type: UserDto })
+  @ApiBadRequestResponse({ description: 'Bad request' })
   createUser(@Body() user: UserCreateDto): UserDto {
     return this.usersService.addUser(user);
   }
 
   @Put(':id')
+  @ApiOkResponse({ description: 'Updates a user', type: UserDto })
+  @ApiBadRequestResponse({ description: 'Bad request' })
+  @ApiNotFoundResponse({ description: 'User not found' })
   updateUser(@Param('id') id: string, @Body() user: UserUpdateDto): UserDto {
     return this.usersService.updateUser(id, user);
   }
 
   @Delete(':id')
+  @ApiOkResponse({ description: 'Deletes a user', type: UserDto })
+  @ApiNotFoundResponse({ description: 'User not found' })
   deleteUser(@Param('id') id: string): UserDto {
     return this.usersService.removeUser(id);
   }
