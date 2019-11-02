@@ -1,0 +1,29 @@
+{
+  "name": "test-openapi-to-typescript",
+  "version": "1.0.0",
+  "description": "test",
+  "author": "paulsouche <paul.souche@gmail.com>",
+  "license": "MIT",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist/*",
+    "build": "ts-node index.ts",
+    "lint": "tslint -p tsconfig.json -c tslint.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:paulsouche/open-api-nest-experiment.git",
+    "directory": "packages/test-openapi-to-typescript"
+  },
+  "devDependencies": {
+    "@types/yargs": "^13.0.3",
+    "axios": "^0.19.0",
+    "openapi-to-typescript": "^4.0.0",
+    "rimraf": "^3.0.0",
+    "ts-node": "^8.4.1",
+    "yargs": "^14.2.0"
+  }
+}
