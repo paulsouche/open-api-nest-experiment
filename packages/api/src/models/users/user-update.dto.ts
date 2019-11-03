@@ -1,14 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDefined, IsOptional, IsString } from 'class-validator';
+import userId from './user-id';
 
 export default class UserUpdateDto {
   @ApiProperty({
     description: 'user id',
     required: true,
+    type: String,
   })
   @IsString()
   @IsDefined()
-  id!: string;
+  id!: userId;
 
   @ApiProperty({
     description: 'user firstname',
