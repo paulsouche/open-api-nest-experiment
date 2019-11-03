@@ -45,6 +45,7 @@
     "@types/uuid": "^3.4.6",
     "jest": "^24.9.0",
     "nodemon": "^1.19.4",
+    "openapi-schema-validator": "^3.0.3",
     "rimraf": "^3.0.0",
     "supertest": "^4.0.2",
     "ts-jest": "^24.1.0",
