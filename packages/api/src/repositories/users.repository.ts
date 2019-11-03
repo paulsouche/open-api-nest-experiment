@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import UserDto from '../models/user-dto';
-import UserUpdateDto from '../models/user-update-dto';
+import userId from '../models/users/user-id';
+import UserUpdateDto from '../models/users/user-update.dto';
+import UserDto from '../models/users/user.dto';
 
 // TODO real postgres connection
 const users: UserDto[] = [];
@@ -12,7 +13,7 @@ export default class UsersRepository {
     return users;
   }
 
-  getUser(id: string): UserDto | undefined {
+  getUser(id: userId): UserDto | undefined {
     return users.find((u) => u.id === id);
   }
 

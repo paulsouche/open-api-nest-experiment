@@ -1,8 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiUseTags } from '@nestjs/swagger';
-import UserCreateDto from '../models/user-create-dto';
-import UserDto from '../models/user-dto';
-import UserUpdateDto from '../models/user-update-dto';
+import UserCreateDto from '../models/users/user-create.dto';
+import userId from '../models/users/user-id';
+import UserUpdateDto from '../models/users/user-update.dto';
+import UserDto from '../models/users/user.dto';
 import UsersService from '../services/users.service';
 
 @ApiUseTags('users')
@@ -19,7 +20,7 @@ export default class UsersController {
   @Get(':id')
   @ApiOkResponse({ description: 'Returns a user', type: UserDto })
   @ApiNotFoundResponse({ description: 'User not found' })
-  getUser(@Param('id') id: string): UserDto {
+  getUser(@Param('id') id: userId): UserDto {
     return this.usersService.getUser(id);
   }
 
@@ -34,14 +35,14 @@ export default class UsersController {
   @ApiOkResponse({ description: 'Updates a user', type: UserDto })
   @ApiBadRequestResponse({ description: 'Bad request' })
   @ApiNotFoundResponse({ description: 'User not found' })
-  updateUser(@Param('id') id: string, @Body() user: UserUpdateDto): UserDto {
+  updateUser(@Param('id') id: userId, @Body() user: UserUpdateDto): UserDto {
     return this.usersService.updateUser(id, user);
   }
 
   @Delete(':id')
   @ApiOkResponse({ description: 'Deletes a user', type: UserDto })
   @ApiNotFoundResponse({ description: 'User not found' })
-  deleteUser(@Param('id') id: string): UserDto {
+  deleteUser(@Param('id') id: userId): UserDto {
     return this.usersService.removeUser(id);
   }
 }
