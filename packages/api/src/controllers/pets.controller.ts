@@ -50,7 +50,7 @@ export default class PetsController {
     name: 'userId',
     type: String,
   })
-  createUser(@Param('userId') uId: userId, @Body() pet: PetCreateDto): PetDto {
+  createPet(@Param('userId') uId: userId, @Body() pet: PetCreateDto): PetDto {
     return this.petsService.addPet(uId, pet);
   }
 
@@ -68,7 +68,7 @@ export default class PetsController {
     name: 'id',
     type: String,
   })
-  updateUser(@Param('userId') uId: userId, @Param('id') id: petId, @Body() pet: PetUpdateDto): PetDto {
+  updatePet(@Param('userId') uId: userId, @Param('id') id: petId, @Body() pet: PetUpdateDto): PetDto {
     return this.petsService.updatePet(uId, id, pet);
   }
 
@@ -85,7 +85,7 @@ export default class PetsController {
     name: 'id',
     type: String,
   })
-  deleteUser(@Param('userId') uId: userId, @Param('id') id: petId): PetDto {
+  deletePet(@Param('userId') uId: userId, @Param('id') id: petId): PetDto {
     return this.petsService.removePet(uId, id);
   }
 }
