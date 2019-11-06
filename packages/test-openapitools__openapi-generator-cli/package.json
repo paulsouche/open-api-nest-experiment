@@ -1,0 +1,29 @@
+{
+  "name": "test-openapitools__openapi-generator-cli",
+  "version": "1.0.0",
+  "description": "test",
+  "author": "paulsouche <paul.souche@gmail.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist/* src/dist/*",
+    "build": "yarn swagger-json && yarn swagger-client && tsc -p src",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "swagger-client": "openapi-generator generate -i src/dist/swagger.json -g typescript-axios -o src/dist",
+    "swagger-json": "ts-node index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:paulsouche/open-api-nest-experiment.git",
+    "directory": "packages/test-sw2dts"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^1.0.2-4.2.0",
+    "rimraf": "^3.0.0",
+    "ts-node": "^8.4.1"
+  }
+}
