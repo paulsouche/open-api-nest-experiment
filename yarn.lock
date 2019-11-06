@@ -1154,6 +1154,11 @@
   dependencies:
     "@types/node" ">= 8"
 
+"@openapitools/openapi-generator-cli@^1.0.2-4.2.0":
+  version "1.0.2-4.2.0"
+  resolved "https://registry.yarnpkg.com/@openapitools/openapi-generator-cli/-/openapi-generator-cli-1.0.2-4.2.0.tgz#21d27c65a8a17358edd6089182e8875f1511bb12"
+  integrity sha512-rkr7fDUyU06wjszO/chRVtITS5dN4FFg4i6/zuLIVMKcpGNIq2vjw2NJhNG11vjA/aBnnFMFrvC4z99O5Wsuiw==
+
 "@types/babel__core@^7.1.0":
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.3.tgz#e441ea7df63cd080dfcd02ab199e6d16a735fc30"
