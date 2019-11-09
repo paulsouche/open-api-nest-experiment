@@ -1,10 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsDefined, IsOptional, IsString } from 'class-validator';
 
 export default class UserCreateDto {
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'user firstname',
-    required: false,
     type: String,
   })
   @IsString()
@@ -13,7 +12,6 @@ export default class UserCreateDto {
 
   @ApiProperty({
     description: 'user lastname',
-    required: true,
   })
   @IsString()
   @IsDefined()

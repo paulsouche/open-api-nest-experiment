@@ -1,7 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiParam, ApiUseTags } from '@nestjs/swagger';
+import ApiParameters from '../annotations/api-parameters';
 import PetCreateDto from '../models/pets/pet-create.dto';
 import petId from '../models/pets/pet-id';
+import PetPathParaneters from '../models/pets/pet-path-parameters';
 import PetUpdateDto from '../models/pets/pet-update.dto';
 import PetDto from '../models/pets/pet.dto';
 import userId from '../models/users/user-id';
@@ -27,16 +29,7 @@ export default class PetsController {
   @Get(':id')
   @ApiOkResponse({ description: 'Returns a pet', type: PetDto })
   @ApiNotFoundResponse({ description: 'User or Pet not found' })
-  @ApiParam({
-    description: 'user id',
-    name: 'userId',
-    type: String,
-  })
-  @ApiParam({
-    description: 'pet id',
-    name: 'id',
-    type: String,
-  })
+  @ApiParameters(PetPathParaneters)
   getPet(@Param('userId') uId: userId, @Param('id') id: petId): PetDto {
     return this.petsService.getPet(uId, id);
   }
@@ -58,16 +51,7 @@ export default class PetsController {
   @ApiOkResponse({ description: 'Updates a pet', type: PetDto })
   @ApiBadRequestResponse({ description: 'Bad request' })
   @ApiNotFoundResponse({ description: 'User or Pet not found' })
-  @ApiParam({
-    description: 'user id',
-    name: 'userId',
-    type: String,
-  })
-  @ApiParam({
-    description: 'pet id',
-    name: 'id',
-    type: String,
-  })
+  @ApiParameters(PetPathParaneters)
   updatePet(@Param('userId') uId: userId, @Param('id') id: petId, @Body() pet: PetUpdateDto): PetDto {
     return this.petsService.updatePet(uId, id, pet);
   }
@@ -75,16 +59,7 @@ export default class PetsController {
   @Delete(':id')
   @ApiOkResponse({ description: 'Deletes a pet', type: PetDto })
   @ApiNotFoundResponse({ description: 'User or Pet not found' })
-  @ApiParam({
-    description: 'user id',
-    name: 'userId',
-    type: String,
-  })
-  @ApiParam({
-    description: 'pet id',
-    name: 'id',
-    type: String,
-  })
+  @ApiParameters(PetPathParaneters)
   deletePet(@Param('userId') uId: userId, @Param('id') id: petId): PetDto {
     return this.petsService.removePet(uId, id);
   }
