@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import userId from './user-id';
 
 export default class UserDto {
@@ -8,9 +8,8 @@ export default class UserDto {
   })
   id!: userId;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'user firstname',
-    required: false,
     type: String,
   })
   firstname?: string | undefined;
