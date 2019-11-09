@@ -1,20 +1,18 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsDefined, IsOptional, IsString } from 'class-validator';
 import userId from './user-id';
 
 export default class UserUpdateDto {
   @ApiProperty({
     description: 'user id',
-    required: true,
     type: String,
   })
   @IsString()
   @IsDefined()
   id!: userId;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'user firstname',
-    required: false,
     type: String,
   })
   @IsString()
@@ -23,7 +21,6 @@ export default class UserUpdateDto {
 
   @ApiProperty({
     description: 'user lastname',
-    required: true,
   })
   @IsString()
   @IsDefined()

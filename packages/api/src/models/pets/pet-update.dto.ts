@@ -7,7 +7,6 @@ import PetKind, { PetKindEnum } from './pet-kind';
 export default class PetUpdateDto {
   @ApiProperty({
     description: 'pet id',
-    required: true,
     type: String,
   })
   @IsString()
@@ -16,7 +15,6 @@ export default class PetUpdateDto {
 
   @ApiProperty({
     description: 'pet user id',
-    required: true,
     type: String,
   })
   @IsString()
@@ -25,7 +23,6 @@ export default class PetUpdateDto {
 
   @ApiProperty({
     description: 'pet nickname',
-    required: true,
     type: String,
   })
   @IsString()
@@ -35,7 +32,6 @@ export default class PetUpdateDto {
   @ApiProperty({
     description: 'pet kind',
     enum: PetKindEnum,
-    required: true,
   })
   @IsIn(PetKindEnum)
   @IsDefined()
