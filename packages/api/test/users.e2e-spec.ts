@@ -73,6 +73,7 @@ describe(`UsersController (e2e)`, () => {
           expect(body).toEqual({
             id: body.id,
             ...createUser,
+            pets: [],
           });
         });
     });
@@ -101,6 +102,7 @@ describe(`UsersController (e2e)`, () => {
           .expect({
             ...createUser,
             id: createdUserId,
+            pets: [],
           });
       });
     });
@@ -172,7 +174,10 @@ describe(`UsersController (e2e)`, () => {
           .put(`/users/${createdUserId.toString()}`)
           .send(updateUser)
           .expect(200)
-          .expect(updateUser);
+          .expect({
+            ...updateUser,
+            pets: [],
+          });
       });
     });
   });
@@ -201,6 +206,7 @@ describe(`UsersController (e2e)`, () => {
             expect(body).toEqual({
               ...createUser,
               id: createdUserId,
+              pets: [],
             });
           });
       });
