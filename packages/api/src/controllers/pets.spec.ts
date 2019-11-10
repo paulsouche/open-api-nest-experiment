@@ -2,12 +2,12 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
-import AppModule from '../src/app.module';
-import PetCreateDto from '../src/models/pets/pet-create.dto';
-import petId from '../src/models/pets/pet-id';
-import PetUpdateDto from '../src/models/pets/pet-update.dto';
-import UserCreateDto from '../src/models/users/user-create.dto';
-import userId from '../src/models/users/user-id';
+import AppModule from '../app.module';
+import PetCreateDto from '../models/pets/pet-create.dto';
+import petId from '../models/pets/pet-id';
+import PetUpdateDto from '../models/pets/pet-update.dto';
+import UserCreateDto from '../models/users/user-create.dto';
+import userId from '../models/users/user-id';
 
 describe(`PetsController (e2e)`, () => {
   let app: INestApplication;
