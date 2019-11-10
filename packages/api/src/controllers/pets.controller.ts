@@ -1,6 +1,11 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiParam, ApiUseTags } from '@nestjs/swagger';
+// tslint:disable-next-line: max-line-length
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiExtraModels, ApiNotFoundResponse, ApiOkResponse, ApiParam, ApiUseTags } from '@nestjs/swagger';
 import ApiParameters from '../annotations/api-parameters';
+import { CatDto } from '../models/pets/animals/cat.dto';
+import { DogDto } from '../models/pets/animals/dog.dto';
+import { HamsterDto } from '../models/pets/animals/hamster.dto';
+import { RabbitDto } from '../models/pets/animals/rabbit.dto';
 import PetCreateDto from '../models/pets/pet-create.dto';
 import PetDetailedDto from '../models/pets/pet-detailed.dto';
 import petId from '../models/pets/pet-id';
@@ -17,6 +22,7 @@ export default class PetsController {
 
   @Get()
   @ApiOkResponse({ description: 'Returns a list of pets', type: [PetDto] })
+  @ApiExtraModels(CatDto, DogDto, HamsterDto, RabbitDto)
   @ApiNotFoundResponse({ description: 'User not found' })
   @ApiParam({
     description: 'user id',
