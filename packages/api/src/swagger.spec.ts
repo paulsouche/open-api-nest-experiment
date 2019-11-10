@@ -3,8 +3,8 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import OpenAPISchemaValidator from 'openapi-schema-validator';
 import request from 'supertest';
-import AppModule from '../src/app.module';
-import setupSwagger from '../src/swagger';
+import AppModule from './app.module';
+import setupSwagger from './swagger';
 
 describe('Swagger (e2e)', () => {
   let app: INestApplication;

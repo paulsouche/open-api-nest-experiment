@@ -2,10 +2,10 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
-import AppModule from '../src/app.module';
-import UserCreateDto from '../src/models/users/user-create.dto';
-import userId from '../src/models/users/user-id';
-import UserUpdateDto from '../src/models/users/user-update.dto';
+import AppModule from '../app.module';
+import UserCreateDto from '../models/users/user-create.dto';
+import userId from '../models/users/user-id';
+import UserUpdateDto from '../models/users/user-update.dto';
 
 describe(`UsersController (e2e)`, () => {
   let app: INestApplication;
