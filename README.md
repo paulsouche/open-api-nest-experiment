@@ -24,9 +24,6 @@ $ yarn build
 ```bash
 # unit tests
 $ yarn test
-
-# e2e tests
-$ yarn test:e2e
 ```
 
 ## Lint

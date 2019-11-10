@@ -18,9 +18,6 @@ $ yarn test
 
 # test coverage
 $ yarn test:coverage
-
-# e2e tests
-$ yarn test:e2e
 ```
 
 ## Lint
