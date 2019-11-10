@@ -2,7 +2,7 @@ import ApiPathParameter from '../../annotations/api-path-parameter';
 import userId from '../users/user-id';
 import petId from './pet-id';
 
-export default class PetPathParans {
+export default class PetPathParaneters {
   @ApiPathParameter({
     description: 'user id',
     type: String,
