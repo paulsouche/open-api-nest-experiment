@@ -1,12 +1,19 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { v4 } from 'uuid';
 import PetCreateDto from '../models/pets/pet-create.dto';
+import PetDetailedDto from '../models/pets/pet-detailed.dto';
 import petId from '../models/pets/pet-id';
 import PetUpdateDto from '../models/pets/pet-update.dto';
 import PetDto from '../models/pets/pet.dto';
 import userId from '../models/users/user-id';
+import UserDto from '../models/users/user.dto';
 import PetsRepository from '../repositories/pets.repository';
 import UsersService from './users.service';
+
+interface PetAndUser {
+  pet: PetDto;
+  user: UserDto;
+}
 
 @Injectable()
 export default class PetsService {
@@ -18,28 +25,32 @@ export default class PetsService {
     return this.petsRepository.getPetsForUser(uId);
   }
 
-  getPet(uId: userId, id: petId): PetDto {
-    return this.findPet(uId, id);
+  getPet(uId: userId, id: petId): PetDetailedDto {
+    return this.mapPetToDetailedPet(this.findPetAndUser(uId, id));
   }
 
-  addPet(uId: userId, pet: PetCreateDto): PetDto {
-    this.validateUserId(uId);
-    if (uId !== pet.userId) {
+  addPet(uId: userId, create: PetCreateDto): PetDetailedDto {
+    const user = this.validateUserId(uId);
+    if (uId !== create.userId) {
       throw new BadRequestException();
     }
-    return this.petsRepository.addPet(this.mapCreatePetToPet(pet));
+    const pet = this.petsRepository.addPet(this.mapCreatePetToPet(create));
+    return this.mapPetToDetailedPet({ user, pet });
   }
 
-  updatePet(uId: userId, id: petId, update: PetUpdateDto): PetDto {
-    const pet = this.findPet(uId, id);
+  updatePet(uId: userId, id: petId, update: PetUpdateDto): PetDetailedDto {
+    const { pet: toUpdate, user } = this.findPetAndUser(uId, id);
     if (id !== update.id || uId !== update.userId) {
       throw new BadRequestException();
     }
-    return this.petsRepository.updatePet(pet, update);
+    const pet = this.petsRepository.updatePet(toUpdate, update);
+    return this.mapPetToDetailedPet({ user, pet });
   }
 
-  removePet(uId: userId, id: petId): PetDto {
-    return this.petsRepository.removePet(this.findPet(uId, id));
+  removePet(uId: userId, id: petId): PetDetailedDto {
+    const { pet: toRemove, user } = this.findPetAndUser(uId, id);
+    const pet =  this.petsRepository.removePet(toRemove);
+    return this.mapPetToDetailedPet({ user, pet });
   }
 
   private mapCreatePetToPet(createPet: PetCreateDto): PetDto {
@@ -49,9 +60,16 @@ export default class PetsService {
     };
   }
 
-  private findPet(uId: userId, id: petId): PetDto {
+  private mapPetToDetailedPet({ pet, user }: PetAndUser): PetDetailedDto {
+    return {
+      ...pet,
+      user,
+    };
+  }
+
+  private findPetAndUser(uId: userId, id: petId): PetAndUser {
     // 404 if user does not exist
-    this.validateUserId(uId);
+    const user = this.validateUserId(uId);
 
     // 404 if pet does not exist for user
     const pet = this.petsRepository.getPet(uId, id);
@@ -59,7 +77,10 @@ export default class PetsService {
       throw new NotFoundException();
     }
 
-    return pet;
+    return {
+      pet,
+      user,
+    };
   }
 
   private generatePetId(): petId {
@@ -67,6 +88,6 @@ export default class PetsService {
   }
 
   private validateUserId(uId: userId) {
-    this.usersService.getUser(uId);
+    return this.usersService.getUser(uId);
   }
 }

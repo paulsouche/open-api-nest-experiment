@@ -7,10 +7,12 @@ import PetCreateDto from '../models/pets/pet-create.dto';
 import petId from '../models/pets/pet-id';
 import PetUpdateDto from '../models/pets/pet-update.dto';
 import UserCreateDto from '../models/users/user-create.dto';
+import UserDetailedDto from '../models/users/user-detailed.dto';
 import userId from '../models/users/user-id';
 
 describe(`PetsController (e2e)`, () => {
   let app: INestApplication;
+  let createdUser: UserDetailedDto;
   let createdUserId: userId = '' as any;
   let createdPetId: petId = '' as any;
   const createUser: UserCreateDto = {
@@ -79,7 +81,11 @@ describe(`PetsController (e2e)`, () => {
       beforeEach(() => request(app.getHttpServer())
         .post(`/users`)
         .send(createUser)
-        .then(({ body }) => createdUserId = body.id));
+        .then(({ body }) => {
+          createdUser = body;
+          createdUserId = createdUser.id;
+          delete createdUser.pets;
+        }));
 
       afterEach(() => request(app.getHttpServer())
         .delete(`/users/${createdUserId.toString()}`));
@@ -130,6 +136,7 @@ describe(`PetsController (e2e)`, () => {
             expect(body).toEqual({
               ...createPet,
               id: body.id,
+              user: createdUser,
             });
           });
       });
@@ -149,7 +156,11 @@ describe(`PetsController (e2e)`, () => {
       beforeEach(() => request(app.getHttpServer())
         .post(`/users`)
         .send(createUser)
-        .then(({ body }) => createdUserId = body.id));
+        .then(({ body }) => {
+          createdUser = body;
+          createdUserId = createdUser.id;
+          delete createdUser.pets;
+        }));
 
       afterEach(() => request(app.getHttpServer())
         .delete(`/users/${createdUserId.toString()}`));
@@ -179,6 +190,7 @@ describe(`PetsController (e2e)`, () => {
             .expect({
               ...createPet,
               id: createdPetId,
+              user: createdUser,
               userId: createdUserId,
             });
         });
@@ -200,7 +212,11 @@ describe(`PetsController (e2e)`, () => {
       beforeEach(() => request(app.getHttpServer())
         .post(`/users`)
         .send(createUser)
-        .then(({ body }) => createdUserId = body.id));
+        .then(({ body }) => {
+          createdUser = body;
+          createdUserId = createdUser.id;
+          delete createdUser.pets;
+        }));
 
       afterEach(() => request(app.getHttpServer())
         .delete(`/users/${createdUserId.toString()}`));
@@ -274,7 +290,10 @@ describe(`PetsController (e2e)`, () => {
             .put(`/users/${createdUserId.toString()}/pets/${createdPetId.toString()}`)
             .send(updatePet)
             .expect(200)
-            .expect(updatePet);
+            .expect({
+              ...updatePet,
+              user: createdUser,
+            });
         });
       });
     });
@@ -293,7 +312,11 @@ describe(`PetsController (e2e)`, () => {
       beforeEach(() => request(app.getHttpServer())
         .post(`/users`)
         .send(createUser)
-        .then(({ body }) => createdUserId = body.id));
+        .then(({ body }) => {
+          createdUser = body;
+          createdUserId = createdUser.id;
+          delete createdUser.pets;
+        }));
 
       afterEach(() => request(app.getHttpServer())
         .delete(`/users/${createdUserId.toString()}`));
@@ -323,6 +346,7 @@ describe(`PetsController (e2e)`, () => {
             .expect({
               ...createPet,
               id: createdPetId,
+              user: createdUser,
               userId: createdUserId,
             });
         });
