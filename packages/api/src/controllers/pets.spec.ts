@@ -97,35 +97,6 @@ describe(`PetsController (e2e)`, () => {
           .expect(400);
       });
 
-      it(`And invalid nickname`, () => {
-        createPet.userId = createdUserId;
-        return request(app.getHttpServer())
-          .post(`/users/${createdUserId.toString()}/pets`)
-          .send({
-            ...createPet,
-            nickname: 42,
-          })
-          .expect(400);
-      });
-
-      it(`And invalid kind`, () => {
-        createPet.userId = createdUserId;
-        return request(app.getHttpServer())
-          .post(`/users/${createdUserId.toString()}/pets`)
-          .send({
-            ...createPet,
-            kind: `quux`,
-          })
-          .expect(400);
-      });
-
-      it(`And invalid userId`, () => {
-        return request(app.getHttpServer())
-          .post(`/users/${createdUserId.toString()}/pets`)
-          .send(createPet)
-          .expect(400);
-      });
-
       it(`And valid Dto`, () => {
         createPet.userId = createdUserId;
         return request(app.getHttpServer())
@@ -251,35 +222,14 @@ describe(`PetsController (e2e)`, () => {
             .expect(400);
         });
 
-        it(`And invalid nickname`, () => {
-          updatePet.id = createdPetId;
+        it(`And different id`, () => {
           updatePet.userId = createdUserId;
           return request(app.getHttpServer())
             .put(`/users/${createdUserId.toString()}/pets/${createdPetId.toString()}`)
             .send({
               ...updatePet,
-              nickname: 42,
+              id: `quux`,
             })
-            .expect(400);
-        });
-
-        it(`And invalid kind`, () => {
-          updatePet.id = createdPetId;
-          updatePet.userId = createdUserId;
-          return request(app.getHttpServer())
-            .put(`/users/${createdUserId.toString()}/pets/${createdPetId.toString()}`)
-            .send({
-              ...updatePet,
-              kind: 'quux',
-            })
-            .expect(400);
-        });
-
-        it(`And invalid userId`, () => {
-          updatePet.id = createdPetId;
-          return request(app.getHttpServer())
-            .put(`/users/${createdUserId.toString()}/pets/${createdPetId.toString()}`)
-            .send(updatePet)
             .expect(400);
         });
 

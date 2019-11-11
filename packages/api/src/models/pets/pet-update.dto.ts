@@ -1,12 +1,13 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsDefined, IsIn, IsString } from 'class-validator';
+import { IsPetMetas } from '../../validators/pet-metas.validator';
 import userId from '../users/user-id';
 import CatMetasDto from './metas/cat-meta.dto';
 import DogMetasDto from './metas/dog-meta.dto';
 import HamsterMetasDto from './metas/hamster-meta.dto';
 import RabbitMetasDto from './metas/rabbit-meta.dto';
 import petId from './pet-id';
-import PetKind, { PetKindEnum } from './pet-kind';
+import PetKind, { PetKindEnum, PetMetas } from './pet-kind';
 
 export default class PetUpdateDto {
   @ApiProperty({
@@ -50,5 +51,13 @@ export default class PetUpdateDto {
       {$ref: '#/components/schemas/RabbitMetasDto'},
     ],
   })
-  metas?: CatMetasDto | DogMetasDto | HamsterMetasDto | RabbitMetasDto;
+  @IsPetMetas({
+    Cat: CatMetasDto,
+    Dog: DogMetasDto,
+    Hamster: HamsterMetasDto,
+    Rabbit: RabbitMetasDto,
+  }, {
+    message: 'Metas should match the kind of pet',
+  })
+  metas?: PetMetas;
 }

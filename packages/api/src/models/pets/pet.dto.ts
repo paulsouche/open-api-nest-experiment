@@ -1,10 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import PetBaseDto from './animals/pet-base.dot';
-import CatMetasDto from './metas/cat-meta.dto';
-import DogMetasDto from './metas/dog-meta.dto';
-import HamsterMetasDto from './metas/hamster-meta.dto';
-import RabbitMetasDto from './metas/rabbit-meta.dto';
-import PetKind, { PetKindEnum } from './pet-kind';
+import PetKind, { PetKindEnum, PetMetas } from './pet-kind';
 
 export default class PetDto extends PetBaseDto {
   @ApiProperty({
@@ -21,5 +17,5 @@ export default class PetDto extends PetBaseDto {
       {$ref: '#/components/schemas/RabbitMetasDto'},
     ],
   })
-  metas?: CatMetasDto | DogMetasDto | HamsterMetasDto | RabbitMetasDto;
+  metas?: PetMetas;
 }
