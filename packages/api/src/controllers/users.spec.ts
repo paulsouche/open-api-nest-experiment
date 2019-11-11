@@ -45,25 +45,6 @@ describe(`UsersController (e2e)`, () => {
         .expect(400);
     });
 
-    it(`When invalid lastname`, () => {
-      return request(app.getHttpServer())
-        .post(`/users`)
-        .send({
-          lastname: 42,
-        })
-        .expect(400);
-    });
-
-    it(`When invalid firstname`, () => {
-      return request(app.getHttpServer())
-        .post(`/users`)
-        .send({
-          ...createUser,
-          firstname: 42,
-        })
-        .expect(400);
-    });
-
     it(`When valid Dto`, () => {
       return request(app.getHttpServer())
         .post(`/users`)
@@ -132,28 +113,6 @@ describe(`UsersController (e2e)`, () => {
         return request(app.getHttpServer())
           .put(`/users/${createdUserId.toString()}`)
           .send({})
-          .expect(400);
-      });
-
-      it(`And invalid lastname`, () => {
-        updateUser.id = createdUserId;
-        return request(app.getHttpServer())
-          .put(`/users/${createdUserId.toString()}`)
-          .send({
-            ...updateUser,
-            lastname: 42,
-          })
-          .expect(400);
-      });
-
-      it(`And invalid firstname`, () => {
-        updateUser.id = createdUserId;
-        return request(app.getHttpServer())
-          .put(`/users/${createdUserId.toString()}`)
-          .send({
-            ...updateUser,
-            firstname: 42,
-          })
           .expect(400);
       });
 
