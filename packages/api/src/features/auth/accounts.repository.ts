@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import bcrypt from 'bcrypt';
 import uuid from 'uuid';
-import accountId from '../models/auth/account-id';
-import Account from '../models/auth/account.interface';
-import passwordHash from '../models/auth/password-hash';
+import accountId from './models/account-id';
+import Account from './models/account.interface';
+import passwordHash from './models/password-hash';
 
 // TODO real postgres connection
 const accounts: Account[] = [

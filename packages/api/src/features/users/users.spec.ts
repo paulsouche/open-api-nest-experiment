@@ -2,10 +2,10 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
-import AppModule from '../app.module';
-import UserCreateDto from '../models/users/user-create.dto';
-import userId from '../models/users/user-id';
-import UserUpdateDto from '../models/users/user-update.dto';
+import UserCreateDto from './models/user-create.dto';
+import userId from './models/user-id';
+import UserUpdateDto from './models/user-update.dto';
+import UsersModule from './users.module';
 
 describe(`UsersController (e2e)`, () => {
   let app: INestApplication;
@@ -20,7 +20,7 @@ describe(`UsersController (e2e)`, () => {
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [UsersModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();

@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { v4 } from 'uuid';
-import UserCreateDto from '../models/users/user-create.dto';
-import UserDetailedDto from '../models/users/user-detailed.dto';
-import userId from '../models/users/user-id';
-import UserUpdateDto from '../models/users/user-update.dto';
-import UserDto from '../models/users/user.dto';
-import PetsRepository from '../repositories/pets.repository';
-import UsersRepository from '../repositories/users.repository';
+import PetsRepository from '../pets/pets.repository';
+import UserCreateDto from './models/user-create.dto';
+import UserDetailedDto from './models/user-detailed.dto';
+import userId from './models/user-id';
+import UserUpdateDto from './models/user-update.dto';
+import UserDto from './models/user.dto';
+import UsersRepository from './users.repository';
 
 @Injectable()
 export default class UsersService {

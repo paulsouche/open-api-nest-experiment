@@ -2,13 +2,13 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
-import AppModule from '../app.module';
-import PetCreateDto from '../models/pets/pet-create.dto';
-import petId from '../models/pets/pet-id';
-import PetUpdateDto from '../models/pets/pet-update.dto';
-import UserCreateDto from '../models/users/user-create.dto';
-import UserDetailedDto from '../models/users/user-detailed.dto';
-import userId from '../models/users/user-id';
+import UserCreateDto from '../users/models/user-create.dto';
+import UserDetailedDto from '../users/models/user-detailed.dto';
+import userId from '../users/models/user-id';
+import PetCreateDto from './models/pet-create.dto';
+import petId from './models/pet-id';
+import PetUpdateDto from './models/pet-update.dto';
+import PetsModule from './pets.module';
 
 describe(`PetsController (e2e)`, () => {
   let app: INestApplication;
@@ -32,7 +32,7 @@ describe(`PetsController (e2e)`, () => {
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [PetsModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();

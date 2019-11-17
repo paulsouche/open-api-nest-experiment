@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import petId from '../models/pets/pet-id';
-import PetUpdateDto from '../models/pets/pet-update.dto';
-import PetDto from '../models/pets/pet.dto';
-import userId from '../models/users/user-id';
+import userId from '../users/models/user-id';
+import petId from './models/pet-id';
+import PetUpdateDto from './models/pet-update.dto';
+import PetDto from './models/pet.dto';
 
 // TODO real postgres connection
 const pets: PetDto[] = [];

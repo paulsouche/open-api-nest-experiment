@@ -1,19 +1,19 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 // tslint:disable-next-line: max-line-length
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiExtraModels, ApiNotFoundResponse, ApiOkResponse, ApiParam, ApiUseTags } from '@nestjs/swagger';
-import ApiParameters from '../annotations/api-parameters';
-import { CatDto } from '../models/pets/animals/cat.dto';
-import { DogDto } from '../models/pets/animals/dog.dto';
-import { HamsterDto } from '../models/pets/animals/hamster.dto';
-import { RabbitDto } from '../models/pets/animals/rabbit.dto';
-import PetCreateDto from '../models/pets/pet-create.dto';
-import PetDetailedDto from '../models/pets/pet-detailed.dto';
-import petId from '../models/pets/pet-id';
-import PetPathParaneters from '../models/pets/pet-path-parameters';
-import PetUpdateDto from '../models/pets/pet-update.dto';
-import PetDto from '../models/pets/pet.dto';
-import userId from '../models/users/user-id';
-import PetsService from '../services/pets.service';
+import ApiParameters from '../../annotations/api-parameters';
+import userId from '../users/models/user-id';
+import { CatDto } from './models/animals/cat.dto';
+import { DogDto } from './models/animals/dog.dto';
+import { HamsterDto } from './models/animals/hamster.dto';
+import { RabbitDto } from './models/animals/rabbit.dto';
+import PetCreateDto from './models/pet-create.dto';
+import PetDetailedDto from './models/pet-detailed.dto';
+import petId from './models/pet-id';
+import PetPathParaneters from './models/pet-path-parameters';
+import PetUpdateDto from './models/pet-update.dto';
+import PetDto from './models/pet.dto';
+import PetsService from './pets.service';
 
 @ApiUseTags('pets')
 @Controller('users/:userId/pets')

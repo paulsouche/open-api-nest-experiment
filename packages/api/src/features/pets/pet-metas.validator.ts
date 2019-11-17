@@ -1,8 +1,8 @@
 import { Type } from '@nestjs/common';
 import { registerDecorator, validate, ValidationArguments, ValidationOptions, Validator } from 'class-validator';
-import CommonMetasDto from '../models/pets/metas/common-meta.dto';
-import { PetKindEnum, PetKindKeys } from '../models/pets/pet-kind';
-import PetDto from '../models/pets/pet.dto';
+import CommonMetasDto from './models/metas/common-meta.dto';
+import { PetKindEnum, PetKindKeys } from './models/pet-kind';
+import PetDto from './models/pet.dto';
 
 const validator = new Validator();
 
