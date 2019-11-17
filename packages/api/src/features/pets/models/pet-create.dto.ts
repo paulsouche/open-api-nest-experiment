@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsDefined, IsIn, IsString } from 'class-validator';
-import { IsPetMetas } from '../../validators/pet-metas.validator';
-import userId from '../users/user-id';
+import userId from '../../users/models/user-id';
+import { IsPetMetas } from '../pet-metas.validator';
 import CatMetasDto from './metas/cat-meta.dto';
 import DogMetasDto from './metas/dog-meta.dto';
 import HamsterMetasDto from './metas/hamster-meta.dto';

@@ -1,11 +1,11 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiParam, ApiUseTags } from '@nestjs/swagger';
-import UserCreateDto from '../models/users/user-create.dto';
-import UserDetailedDto from '../models/users/user-detailed.dto';
-import userId from '../models/users/user-id';
-import UserUpdateDto from '../models/users/user-update.dto';
-import UserDto from '../models/users/user.dto';
-import UsersService from '../services/users.service';
+import UserCreateDto from './models/user-create.dto';
+import UserDetailedDto from './models/user-detailed.dto';
+import userId from './models/user-id';
+import UserUpdateDto from './models/user-update.dto';
+import UserDto from './models/user.dto';
+import UsersService from './users.service';
 
 @ApiUseTags('users')
 @Controller('users')

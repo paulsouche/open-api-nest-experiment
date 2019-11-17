@@ -1,8 +1,8 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiUnauthorizedResponse, ApiUseTags } from '@nestjs/swagger';
-import CredentialsDto from '../models/auth/credentials.dto';
-import JwtDto from '../models/auth/jwt.dto';
-import AuthService from '../services/auth.service';
+import AuthService from './auth.service';
+import CredentialsDto from './models/credentials.dto';
+import JwtDto from './models/jwt.dto';
 
 @ApiUseTags('auth')
 @Controller('login')

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import userId from '../models/users/user-id';
-import UserUpdateDto from '../models/users/user-update.dto';
-import UserDto from '../models/users/user.dto';
+import userId from './models/user-id';
+import UserUpdateDto from './models/user-update.dto';
+import UserDto from './models/user.dto';
 
 // TODO real postgres connection
 const users: UserDto[] = [];

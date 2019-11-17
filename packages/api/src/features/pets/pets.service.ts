@@ -1,14 +1,14 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { v4 } from 'uuid';
-import PetCreateDto from '../models/pets/pet-create.dto';
-import PetDetailedDto from '../models/pets/pet-detailed.dto';
-import petId from '../models/pets/pet-id';
-import PetUpdateDto from '../models/pets/pet-update.dto';
-import PetDto from '../models/pets/pet.dto';
-import userId from '../models/users/user-id';
-import UserDto from '../models/users/user.dto';
-import PetsRepository from '../repositories/pets.repository';
-import UsersService from './users.service';
+import userId from '../users/models/user-id';
+import UserDto from '../users/models/user.dto';
+import UsersService from '../users/users.service';
+import PetCreateDto from './models/pet-create.dto';
+import PetDetailedDto from './models/pet-detailed.dto';
+import petId from './models/pet-id';
+import PetUpdateDto from './models/pet-update.dto';
+import PetDto from './models/pet.dto';
+import PetsRepository from './pets.repository';
 
 interface PetAndUser {
   pet: PetDto;

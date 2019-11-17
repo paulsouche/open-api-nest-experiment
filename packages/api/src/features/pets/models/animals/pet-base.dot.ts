@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import userId from '../../users/user-id';
+import userId from '../../../users/models/user-id';
 import petId from '../pet-id';
 
 export default class PetBaseDto {
