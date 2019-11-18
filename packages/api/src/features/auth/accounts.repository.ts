@@ -16,6 +16,10 @@ const accounts: Account[] = [
 
 @Injectable()
 export default class AccountsRepository {
+  getAccountById(acntId: accountId) {
+    return accounts.find(({id}) => id === acntId);
+  }
+
   getAccountByLogin(lgn: string): Account | undefined {
     return accounts.find(({ login }) => login === lgn);
   }
