@@ -8,8 +8,13 @@ import UserUpdateDto from './models/user-update.dto';
 import UsersModule from './users.module';
 
 describe(`UsersController (e2e)`, () => {
+  const credentials = {
+    login: 'admin',
+    password: 'admin',
+  };
   let app: INestApplication;
   let createdUserId: userId = '' as any;
+  let jwt: string;
   const createUser: UserCreateDto = {
     lastname: 'foo',
   };
@@ -29,145 +34,258 @@ describe(`UsersController (e2e)`, () => {
   });
 
   describe(`/users (GET)`, () => {
-    it(``, () => {
-      return request(app.getHttpServer())
-        .get(`/users`)
-        .expect(200)
-        .expect([]);
+    describe(`When not logged in`, () => {
+      it(``, () => {
+        return request(app.getHttpServer())
+          .get(`/users`)
+          .expect(401);
+      });
+    });
+
+    describe(`When logged in`, () => {
+      beforeEach(() => {
+        return request(app.getHttpServer())
+          .post(`/login`)
+          .send(credentials)
+          .expect(201)
+          .then(({ body }) => jwt = body.jwt);
+      });
+
+      it(``, () => {
+        return request(app.getHttpServer())
+          .get(`/users`)
+          .set(`Authorization`, `Bearer ${jwt}`)
+          .expect(200)
+          .expect([]);
+      });
     });
   });
 
   describe(`/users (POST)`, () => {
-    it(`When invalid Dto`, () => {
-      return request(app.getHttpServer())
-        .post(`/users`)
-        .send({})
-        .expect(400);
+    describe(`When not logged in`, () => {
+      it(``, () => {
+        return request(app.getHttpServer())
+          .post(`/users`)
+          .send(createUser)
+          .expect(401);
+      });
     });
 
-    it(`When valid Dto`, () => {
-      return request(app.getHttpServer())
-        .post(`/users`)
-        .send(createUser)
-        .expect(201)
-        .expect(({ body }) => {
-          expect(body).toEqual({
-            id: body.id,
-            ...createUser,
-            pets: [],
+    describe(`When logged in`, () => {
+      beforeEach(() => {
+        return request(app.getHttpServer())
+          .post(`/login`)
+          .send(credentials)
+          .expect(201)
+          .then(({ body }) => jwt = body.jwt);
+      });
+
+      it(`And invalid Dto`, () => {
+        return request(app.getHttpServer())
+          .post(`/users`)
+          .set(`Authorization`, `Bearer ${jwt}`)
+          .send({})
+          .expect(400);
+      });
+
+      it(`And valid Dto`, () => {
+        return request(app.getHttpServer())
+          .post(`/users`)
+          .set(`Authorization`, `Bearer ${jwt}`)
+          .send(createUser)
+          .expect(201)
+          .expect(({ body }) => {
+            expect(body).toEqual({
+              id: body.id,
+              ...createUser,
+              pets: [],
+            });
           });
-        });
+      });
     });
   });
 
   describe(`/users/{id} (GET)`, () => {
-    it(`When id does not exist`, () => {
-      return request(app.getHttpServer())
-        .get(`/users/404`)
-        .expect(404);
-    });
-
-    describe(`When id does exist`, () => {
-      beforeEach(() => request(app.getHttpServer())
-        .post(`/users`)
-        .send(createUser)
-        .then(({ body }) => createdUserId = body.id));
-
-      afterEach(() => request(app.getHttpServer())
-        .delete(`/users/${createdUserId.toString()}`));
-
+    describe(`When not logged in`, () => {
       it(``, () => {
         return request(app.getHttpServer())
-          .get(`/users/${createdUserId.toString()}`)
-          .expect(200)
-          .expect({
-            ...createUser,
-            id: createdUserId,
-            pets: [],
-          });
+          .get(`/users/404`)
+          .expect(401);
+      });
+    });
+
+    describe(`When logged in`, () => {
+      beforeEach(() => {
+        return request(app.getHttpServer())
+          .post(`/login`)
+          .send(credentials)
+          .expect(201)
+          .then(({ body }) => jwt = body.jwt);
+      });
+
+      it(`And id does not exist`, () => {
+        return request(app.getHttpServer())
+          .get(`/users/404`)
+          .set(`Authorization`, `Bearer ${jwt}`)
+          .expect(404);
+      });
+
+      describe(`And id does exist`, () => {
+        beforeEach(() => request(app.getHttpServer())
+          .post(`/users`)
+          .set(`Authorization`, `Bearer ${jwt}`)
+          .send(createUser)
+          .expect(201)
+          .then(({ body }) => createdUserId = body.id));
+
+        afterEach(() => request(app.getHttpServer())
+          .delete(`/users/${createdUserId.toString()}`)
+          .set(`Authorization`, `Bearer ${jwt}`)
+          .expect(200));
+
+        it(``, () => {
+          return request(app.getHttpServer())
+            .get(`/users/${createdUserId.toString()}`)
+            .set(`Authorization`, `Bearer ${jwt}`)
+            .expect(200)
+            .expect({
+              ...createUser,
+              id: createdUserId,
+              pets: [],
+            });
+        });
       });
     });
   });
 
   describe(`/users/{id} (PUT)`, () => {
-    it(`When id does not exist`, () => {
-      return request(app.getHttpServer())
-        .put(`/users/404`)
-        .send({
-          ...updateUser,
-          id: `404`,
-        })
-        .expect(404);
-    });
-
-    describe(`When id does exist`, () => {
-      beforeEach(() => request(app.getHttpServer())
-        .post(`/users`)
-        .send(createUser)
-        .then(({ body }) => createdUserId = body.id));
-
-      afterEach(() => request(app.getHttpServer())
-        .delete(`/users/${createdUserId.toString()}`));
-
-      it(`And invalid Dto`, () => {
+    describe(`When not logged in`, () => {
+      it(``, () => {
         return request(app.getHttpServer())
-          .put(`/users/${createdUserId.toString()}`)
-          .send({})
-          .expect(400);
-      });
-
-      it(`And different id`, () => {
-        updateUser.id = createdUserId;
-        return request(app.getHttpServer())
-          .put(`/users/${createdUserId.toString()}`)
+          .put(`/users/404`)
           .send({
             ...updateUser,
-            id: `quux`,
+            id: `404`,
           })
-          .expect(400);
+          .expect(401);
+      });
+    });
+
+    describe(`When logged in`, () => {
+      beforeEach(() => {
+        return request(app.getHttpServer())
+          .post(`/login`)
+          .send(credentials)
+          .expect(201)
+          .then(({ body }) => jwt = body.jwt);
       });
 
-      it(`And valid Dto`, () => {
-        updateUser.id = createdUserId;
+      it(`And id does not exist`, () => {
         return request(app.getHttpServer())
-          .put(`/users/${createdUserId.toString()}`)
-          .send(updateUser)
-          .expect(200)
-          .expect({
+          .put(`/users/404`)
+          .set(`Authorization`, `Bearer ${jwt}`)
+          .send({
             ...updateUser,
-            pets: [],
-          });
+            id: `404`,
+          })
+          .expect(404);
+      });
+
+      describe(`And id does exist`, () => {
+        beforeEach(() => request(app.getHttpServer())
+          .post(`/users`)
+          .set(`Authorization`, `Bearer ${jwt}`)
+          .send(createUser)
+          .expect(201)
+          .then(({ body }) => createdUserId = body.id));
+
+        afterEach(() => request(app.getHttpServer())
+          .delete(`/users/${createdUserId.toString()}`)
+          .set(`Authorization`, `Bearer ${jwt}`)
+          .expect(200));
+
+        it(`And invalid Dto`, () => {
+          return request(app.getHttpServer())
+            .put(`/users/${createdUserId.toString()}`)
+            .set(`Authorization`, `Bearer ${jwt}`)
+            .send({})
+            .expect(400);
+        });
+
+        it(`And different id`, () => {
+          updateUser.id = createdUserId;
+          return request(app.getHttpServer())
+            .put(`/users/${createdUserId.toString()}`)
+            .set(`Authorization`, `Bearer ${jwt}`)
+            .send({
+              ...updateUser,
+              id: `quux`,
+            })
+            .expect(400);
+        });
+
+        it(`And valid Dto`, () => {
+          updateUser.id = createdUserId;
+          return request(app.getHttpServer())
+            .put(`/users/${createdUserId.toString()}`)
+            .set(`Authorization`, `Bearer ${jwt}`)
+            .send(updateUser)
+            .expect(200)
+            .expect({
+              ...updateUser,
+              pets: [],
+            });
+        });
       });
     });
   });
 
   describe(`/users/{id} (DELETE)`, () => {
-    it(`When id does not exist`, () => {
-      return request(app.getHttpServer())
-        .delete(`/users/404`)
-        .expect(404);
-    });
-
-    describe(`When id does exist`, () => {
-      beforeEach(() => request(app.getHttpServer())
-        .post(`/users`)
-        .send(createUser)
-        .then(({ body }) => createdUserId = body.id));
-
-      afterEach(() => request(app.getHttpServer())
-        .delete(`/users/${createdUserId.toString()}`));
-
+    describe(`When not logged in`, () => {
       it(``, () => {
         return request(app.getHttpServer())
-          .delete(`/users/${createdUserId.toString()}`)
-          .expect(200)
-          .expect(({ body }) => {
-            expect(body).toEqual({
-              ...createUser,
-              id: createdUserId,
-              pets: [],
+          .delete(`/users/404`)
+          .expect(401);
+      });
+    });
+
+    describe(`When logged in`, () => {
+      beforeEach(() => {
+        return request(app.getHttpServer())
+          .post(`/login`)
+          .send(credentials)
+          .expect(201)
+          .then(({ body }) => jwt = body.jwt);
+      });
+
+      it(`And id does not exist`, () => {
+        return request(app.getHttpServer())
+          .delete(`/users/404`)
+          .set(`Authorization`, `Bearer ${jwt}`)
+          .expect(404);
+      });
+
+      describe(`And id does exist`, () => {
+        beforeEach(() => request(app.getHttpServer())
+          .post(`/users`)
+          .set(`Authorization`, `Bearer ${jwt}`)
+          .send(createUser)
+          .expect(201)
+          .then(({ body }) => createdUserId = body.id));
+
+        it(``, () => {
+          return request(app.getHttpServer())
+            .delete(`/users/${createdUserId.toString()}`)
+            .set(`Authorization`, `Bearer ${jwt}`)
+            .expect(200)
+            .expect(({ body }) => {
+              expect(body).toEqual({
+                ...createUser,
+                id: createdUserId,
+                pets: [],
+              });
             });
-          });
+        });
       });
     });
   });

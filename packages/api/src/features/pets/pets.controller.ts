@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 // tslint:disable-next-line: max-line-length
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiExtraModels, ApiNotFoundResponse, ApiOkResponse, ApiParam, ApiUseTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiExtraModels, ApiNotFoundResponse, ApiOkResponse, ApiParam, ApiUnauthorizedResponse, ApiUseTags } from '@nestjs/swagger';
 import ApiParameters from '../../annotations/api-parameters';
 import userId from '../users/models/user-id';
 import { CatDto } from './models/animals/cat.dto';
@@ -16,13 +17,16 @@ import PetDto from './models/pet.dto';
 import PetsService from './pets.service';
 
 @ApiUseTags('pets')
+@ApiBearerAuth()
 @Controller('users/:userId/pets')
+@UseGuards(AuthGuard())
 export default class PetsController {
   constructor(private readonly petsService: PetsService) { }
 
   @Get()
   @ApiOkResponse({ description: 'Returns a list of pets', type: [PetDto] })
   @ApiExtraModels(CatDto, DogDto, HamsterDto, RabbitDto)
+  @ApiUnauthorizedResponse({ description: 'Invalid Authorization header' })
   @ApiNotFoundResponse({ description: 'User not found' })
   @ApiParam({
     description: 'user id',
@@ -35,6 +39,7 @@ export default class PetsController {
 
   @Get(':id')
   @ApiOkResponse({ description: 'Returns a pet', type: PetDetailedDto })
+  @ApiUnauthorizedResponse({ description: 'Invalid Authorization header' })
   @ApiNotFoundResponse({ description: 'User or Pet not found' })
   @ApiParameters(PetPathParaneters)
   getPet(@Param('userId') uId: userId, @Param('id') id: petId): PetDetailedDto {
@@ -44,6 +49,7 @@ export default class PetsController {
   @Post()
   @ApiCreatedResponse({ description: 'Creates a pet', type: PetDetailedDto })
   @ApiBadRequestResponse({ description: 'Bad request' })
+  @ApiUnauthorizedResponse({ description: 'Invalid Authorization header' })
   @ApiNotFoundResponse({ description: 'User or Pet not found' })
   @ApiParam({
     description: 'user id',
@@ -57,6 +63,7 @@ export default class PetsController {
   @Put(':id')
   @ApiOkResponse({ description: 'Updates a pet', type: PetDetailedDto })
   @ApiBadRequestResponse({ description: 'Bad request' })
+  @ApiUnauthorizedResponse({ description: 'Invalid Authorization header' })
   @ApiNotFoundResponse({ description: 'User or Pet not found' })
   @ApiParameters(PetPathParaneters)
   updatePet(@Param('userId') uId: userId, @Param('id') id: petId, @Body() pet: PetUpdateDto): PetDetailedDto {
@@ -65,6 +72,7 @@ export default class PetsController {
 
   @Delete(':id')
   @ApiOkResponse({ description: 'Deletes a pet', type: PetDetailedDto })
+  @ApiUnauthorizedResponse({ description: 'Invalid Authorization header' })
   @ApiNotFoundResponse({ description: 'User or Pet not found' })
   @ApiParameters(PetPathParaneters)
   deletePet(@Param('userId') uId: userId, @Param('id') id: petId): PetDetailedDto {
