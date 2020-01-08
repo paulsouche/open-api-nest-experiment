@@ -1,11 +1,11 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiExtraModels, ApiUnauthorizedResponse, ApiUseTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiExtraModels, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import AuthService from './auth.service';
 import CredentialsDto from './models/credentials.dto';
 import DeserialiwedJwtDto from './models/deserialiwed.jwt.dto';
 import JwtDto from './models/jwt.dto';
 
-@ApiUseTags('auth')
+@ApiTags('auth')
 @Controller('login')
 export default class AuthController {
   constructor(private readonly authService: AuthService) { }

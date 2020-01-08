@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 // tslint:disable-next-line: max-line-length
-import { ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiExtraModels, ApiNotFoundResponse, ApiOkResponse, ApiParam, ApiUnauthorizedResponse, ApiUseTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiExtraModels, ApiNotFoundResponse, ApiOkResponse, ApiParam, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import ApiParameters from '../../annotations/api-parameters';
 import userId from '../users/models/user-id';
 import { CatDto } from './models/animals/cat.dto';
@@ -16,7 +16,7 @@ import PetUpdateDto from './models/pet-update.dto';
 import PetDto from './models/pet.dto';
 import PetsService from './pets.service';
 
-@ApiUseTags('pets')
+@ApiTags('pets')
 @ApiBearerAuth()
 @Controller('users/:userId/pets')
 @UseGuards(AuthGuard())
