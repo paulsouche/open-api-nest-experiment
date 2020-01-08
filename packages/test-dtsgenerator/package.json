@@ -19,8 +19,8 @@
     "directory": "packages/test-dtsgenerator"
   },
   "devDependencies": {
-    "dtsgenerator": "^2.3.1",
+    "dtsgenerator": "^2.3.2",
     "rimraf": "^3.0.0",
-    "ts-node": "^8.4.1"
+    "ts-node": "^8.5.4"
   }
 }
