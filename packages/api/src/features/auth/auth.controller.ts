@@ -12,7 +12,7 @@ export default class AuthController {
 
   @Post()
   @ApiExtraModels(DeserialiwedJwtDto)
-  @ApiCreatedResponse({ description: 'Returns a jwt', type: [JwtDto] })
+  @ApiCreatedResponse({ description: 'Returns a jwt', type: JwtDto })
   @ApiBadRequestResponse({ description: 'Bad request' })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   login(@Body() credentials: CredentialsDto): Promise<JwtDto> {

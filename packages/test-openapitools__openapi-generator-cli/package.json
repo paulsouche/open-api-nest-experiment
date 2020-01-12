@@ -13,17 +13,40 @@
     "prebuild": "rimraf dist/* src/dist/*",
     "build": "yarn swagger-json && yarn swagger-client && tsc -p src",
     "lint": "tslint -p tsconfig.json -c tslint.json",
+    "pretest": "yarn build",
     "swagger-client": "openapi-generator generate -i src/dist/swagger.json -g typescript-axios -o src/dist",
-    "swagger-json": "ts-node index.ts"
+    "swagger-json": "ts-node index.ts",
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:paulsouche/open-api-nest-experiment.git",
     "directory": "packages/test-sw2dts"
   },
+  "dependencies": {
+    "axios": "^0.19.1",
+    "tslib": "^1.10.0"
+  },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "latest",
+    "jest": "^24.9.0",
+    "nock": "^11.7.2",
     "rimraf": "^3.0.0",
+    "ts-jest": "^24.3.0",
     "ts-node": "^8.5.4"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "coverage",
+    "testEnvironment": "node"
   }
 }
