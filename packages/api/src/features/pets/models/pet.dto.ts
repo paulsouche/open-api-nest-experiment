@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import PetBaseDto from './animals/pet-base.dot';
+import PetBaseDto from './base/pet-base.dto';
 import PetKind, { PetKindEnum, PetMetas } from './pet-kind';
 
 export default class PetDto extends PetBaseDto {

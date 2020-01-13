@@ -2,7 +2,7 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiCreatedResponse, ApiExtraModels, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import AuthService from './auth.service';
 import CredentialsDto from './models/credentials.dto';
-import DeserialiwedJwtDto from './models/deserialiwed.jwt.dto';
+import DeserialiwedJwtDto from './models/deserialized.jwt.dto';
 import JwtDto from './models/jwt.dto';
 
 @ApiTags('auth')

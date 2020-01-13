@@ -1,6 +1,6 @@
 // tslint:disable-next-line: no-implicit-dependencies
 import nock, { Scope } from 'nock';
-import { PetCreateDtoKindEnum, PetDetailedDtoKindEnum, PetsApiFp, PetUpdateDtoKindEnum } from '../src/dist';
+import { CatCreateDtoKindEnum, CatUpdateDtoKindEnum, PetDetailedDtoKindEnum, PetsApiFp } from '../src/dist';
 import { BASE_PATH } from '../src/dist/base';
 
 const USER_ID = `userId`;
@@ -64,7 +64,7 @@ describe(`Feature pets`, () => {
     it(`Should return 401 with no bearer`, async () => {
       try {
         await PetsApiFp().createPet(USER_ID, {
-          kind: PetCreateDtoKindEnum.Cat,
+          kind: CatCreateDtoKindEnum.Cat,
           nickname: `nickname`,
           userId: USER_ID,
         })();
@@ -77,7 +77,7 @@ describe(`Feature pets`, () => {
 
     it(`Should return 201 with bearer`, async () => {
       const response = await PetsApiFp({ accessToken: JWT }).createPet(USER_ID, {
-        kind: PetCreateDtoKindEnum.Cat,
+        kind: CatCreateDtoKindEnum.Cat,
         nickname: `nickname`,
         userId: USER_ID,
       })();
@@ -85,7 +85,7 @@ describe(`Feature pets`, () => {
       expect(response.status).toBe(201);
       expect(response.data).toEqual({
         id: `id`,
-        kind: PetCreateDtoKindEnum.Cat,
+        kind: CatCreateDtoKindEnum.Cat,
         nickname: `nickname`,
         userId: USER_ID,
       });
@@ -101,7 +101,7 @@ describe(`Feature pets`, () => {
         return (this.req.getHeader(`Authorization`) === `Bearer ${JWT}`)
           ? [200, {
             id: `id`,
-            kind: PetCreateDtoKindEnum.Cat,
+            kind: CatCreateDtoKindEnum.Cat,
             nickname: `nickname`,
             userId: USER_ID,
           }]
@@ -129,7 +129,7 @@ describe(`Feature pets`, () => {
       expect(response.status).toBe(200);
       expect(response.data).toEqual({
         id: `id`,
-        kind: PetCreateDtoKindEnum.Cat,
+        kind: CatCreateDtoKindEnum.Cat,
         nickname: `nickname`,
         userId: USER_ID,
       });
@@ -159,7 +159,7 @@ describe(`Feature pets`, () => {
       try {
         await PetsApiFp().updatePet(USER_ID, `id`, {
           id: `id`,
-          kind: PetUpdateDtoKindEnum.Cat,
+          kind: CatUpdateDtoKindEnum.Cat,
           nickname: `lastname updated`,
           userId: USER_ID,
         })();
@@ -173,7 +173,7 @@ describe(`Feature pets`, () => {
     it(`Should return 200 with bearer`, async () => {
       const response = await PetsApiFp({ accessToken: JWT }).updatePet(USER_ID, `id`, {
         id: `id`,
-        kind: PetUpdateDtoKindEnum.Cat,
+        kind: CatUpdateDtoKindEnum.Cat,
         nickname: `lastname updated`,
         userId: USER_ID,
       })();
@@ -181,7 +181,7 @@ describe(`Feature pets`, () => {
       expect(response.status).toBe(200);
       expect(response.data).toEqual({
         id: `id`,
-        kind: PetUpdateDtoKindEnum.Cat,
+        kind: CatUpdateDtoKindEnum.Cat,
         nickname: `lastname updated`,
         userId: USER_ID,
       });

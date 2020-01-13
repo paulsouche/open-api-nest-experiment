@@ -1,9 +1,9 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import PetBaseDto from '../base/pet-base.dto';
+import PetUpdateBaseDto from '../base/pet-update-base.dto';
 import HamsterMetasDto from '../metas/hamster-meta.dto';
 import PetKind from '../pet-kind';
 
-export class HamsterDto extends PetBaseDto {
+export class HamsterUpdateDto extends PetUpdateBaseDto {
   @ApiProperty({
     description: 'pet kind',
     enum: [PetKind.Hamster],

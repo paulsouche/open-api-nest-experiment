@@ -1,39 +1,14 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsDefined, IsIn, IsString } from 'class-validator';
-import userId from '../../users/models/user-id';
+import { IsDefined, IsIn } from 'class-validator';
 import { IsPetMetas } from '../pet-metas.validator';
+import PetUpdateBaseDto from './base/pet-update-base.dto';
 import CatMetasDto from './metas/cat-meta.dto';
 import DogMetasDto from './metas/dog-meta.dto';
 import HamsterMetasDto from './metas/hamster-meta.dto';
 import RabbitMetasDto from './metas/rabbit-meta.dto';
-import petId from './pet-id';
 import PetKind, { PetKindEnum, PetMetas } from './pet-kind';
 
-export default class PetUpdateDto {
-  @ApiProperty({
-    description: 'pet id',
-    type: String,
-  })
-  @IsString()
-  @IsDefined()
-  id!: petId;
-
-  @ApiProperty({
-    description: 'pet user id',
-    type: String,
-  })
-  @IsString()
-  @IsDefined()
-  userId!: userId;
-
-  @ApiProperty({
-    description: 'pet nickname',
-    type: String,
-  })
-  @IsString()
-  @IsDefined()
-  nickname!: string;
-
+export default class PetUpdateDto extends PetUpdateBaseDto {
   @ApiProperty({
     description: 'pet kind',
     enum: PetKindEnum,
