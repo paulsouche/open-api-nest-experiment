@@ -10,6 +10,16 @@ describe('PetCreateDto', () => {
       {
         children: [],
         constraints: {
+          isDefined: 'kind should not be null or undefined',
+          isIn: 'kind must be one of the following values: Cat,Dog,Hamster,Rabbit',
+        },
+        property: 'kind',
+        target: pet,
+        value: undefined,
+      },
+      {
+        children: [],
+        constraints: {
           isDefined: 'userId should not be null or undefined',
           isString: 'userId must be a string',
         },
@@ -24,16 +34,6 @@ describe('PetCreateDto', () => {
           isString: 'nickname must be a string',
         },
         property: 'nickname',
-        target: pet,
-        value: undefined,
-      },
-      {
-        children: [],
-        constraints: {
-          isDefined: 'kind should not be null or undefined',
-          isIn: 'kind must be one of the following values: Cat,Dog,Hamster,Rabbit',
-        },
-        property: 'kind',
         target: pet,
         value: undefined,
       },
@@ -143,6 +143,16 @@ describe('PetUpdateDto', () => {
       {
         children: [],
         constraints: {
+          isDefined: 'kind should not be null or undefined',
+          isIn: 'kind must be one of the following values: Cat,Dog,Hamster,Rabbit',
+        },
+        property: 'kind',
+        target: pet,
+        value: undefined,
+      },
+      {
+        children: [],
+        constraints: {
           isDefined: 'id should not be null or undefined',
           isString: 'id must be a string',
         },
@@ -167,16 +177,6 @@ describe('PetUpdateDto', () => {
           isString: 'nickname must be a string',
         },
         property: 'nickname',
-        target: pet,
-        value: undefined,
-      },
-      {
-        children: [],
-        constraints: {
-          isDefined: 'kind should not be null or undefined',
-          isIn: 'kind must be one of the following values: Cat,Dog,Hamster,Rabbit',
-        },
-        property: 'kind',
         target: pet,
         value: undefined,
       },
