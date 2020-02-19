@@ -53,7 +53,10 @@ describe('AuthController (e2e)', () => {
           password: 'admin',
         })
         .expect(201)
-        .expect(({ body: { jwt } }) => {
+        .expect((res) => {
+          const { body: { jwt } } = res;
+          const refreshCookie = (res.get('set-cookie') as unknown as string[]).pop();
+          expect(typeof refreshCookie).toBe('string');
           const jwtBody: string = jwt.split('.').slice(1).shift().replace(/-/g, '+').replace(/_/g, '/');
           const { exp, sub } = JSON.parse(Buffer.from(jwtBody, 'base64').toString());
           expect(typeof exp).toBe('number');

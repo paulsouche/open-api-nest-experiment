@@ -1,6 +1,7 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import cookieParser from 'cookie-parser';
 import AccountsRepository from './accounts.repository';
 import AuthController from './auth.controller';
 import AuthService from './auth.service';
@@ -23,4 +24,10 @@ import JwtStrategy from './jwt.strategy';
   ],
   providers: [AuthService, AccountsRepository, JwtStrategy],
 })
-export default class AuthModule { }
+export default class AuthModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(cookieParser())
+      .forRoutes(AuthController);
+  }
+}
